@@ -42,14 +42,14 @@ msgstr ""
 
         // Reference to original source file
         result.push(`#: ${currentFile.translatedFileName(this._language)}`);
-
+        result.push(`#| msgid ${message.id}`);
         // If there is a comment on the resource, insert it as msg context
         if (message.description) {
             result.push(`msgctxt "${message.description}"`);
         }
 
         // Message id
-        result.push(`msgid "${message.id}"`);
+        result.push(`msgid "${message.getTranslation(Util.defaultLanguage).text}"`);
 
         let translation = message.getTranslation(this._language);
         let translationText = "";
@@ -70,7 +70,7 @@ msgstr ""
     private writeFile(file: File): Buffer {
         let eolBuffer = new Buffer(os.EOL);
 
-        let buffers = file.messages.map((message) => {
+        let buffers = file.messages.filter((message) => message.hasTranslation(Util.defaultLanguage)).map((message) => {
             return Buffer.concat([this.writeMessage(file, message), eolBuffer, eolBuffer]);
         });
 
@@ -79,6 +79,7 @@ msgstr ""
 
     /**
      * Run the writer
+     * @returns Buffer containing the file content
      */
     public run(): Buffer {
 

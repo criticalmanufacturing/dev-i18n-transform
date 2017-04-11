@@ -9,6 +9,11 @@ export class Util {
             version: packageJson.version
         };
     }
+
+    /**
+     * Gets the default language code
+     */
+    public defaultLanguage: string = "en-US";
 }
 
 const singleton = new Util();

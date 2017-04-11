@@ -1,10 +1,10 @@
-import {File} from "../model/file";
+import { Package } from "../model/package";
 
 export interface Parser {
 
     /**
      * Analyze
      */
-    run(): File[];
+    run(): Package;
 
 }

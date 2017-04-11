@@ -10,6 +10,11 @@ export class File {
     private readonly _messages: {[key: string]: Message} = {};
 
     /**
+     * Gets the list of file references
+     */
+    public readonly references: string[] = [];
+
+    /**
      * Gets the file name
      */
     public get uniqueFileName(): string {
@@ -48,6 +53,15 @@ export class File {
     }
 
     /**
+     * Gets a given message from the file
+     * @param id Message id
+     * @returns Null if id doesn't exist, the Message otherwise
+     */
+    public getMessage(id: string): Message {
+        return this._messages[id] || null;
+    }
+
+    /**
      * Merges the given file into the current
      * @param file File to merge
      * @throws Argument null error if file is not defined
@@ -70,6 +84,14 @@ export class File {
      */
     public translatedFileName(language: string): string {
         return path.join(this._dirname, `${this._filename}.${language}.${this._extension}`);
+    }
+
+    /**
+     * Add a reference to the current file
+     * @param ref Reference to add
+     */
+    public addReference(ref: string): void {
+        this.references.push(ref);
     }
 
     /**

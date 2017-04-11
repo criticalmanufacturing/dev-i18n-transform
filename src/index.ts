@@ -8,20 +8,15 @@ import { ParserFactory } from "./parsers/index";
 import { Package } from "./model/package";
 import { WriterFactory } from "./writers/index";
 
-let parser = ParserFactory.getParser(
+let parser = ParserFactory.getParser("test",
     [
-        path.join(__dirname, "../test/mocks/simpleExample/mock.default.ts"),
-        path.join(__dirname, "../test/mocks/simpleExample/mock.pt-PT.ts")
+        path.join(__dirname, "../test/mocks/crossReferenceExample/mock.default.ts"),
+        path.join(__dirname, "../test/mocks/crossReferenceExample/mock.pt-PT.ts")
     ]
 );
-let files = parser.run();
+let pack = parser.run();
 
-let pack: Package = new Package("test");
-for (let file of files) {
-    pack.addOrUpdateFile(file);
-}
-
-let writer = WriterFactory.getWriter(pack.files, "en-US");
+let writer = WriterFactory.getWriter(pack.files, "pt-PT");
 let buffer = writer.run();
 let result = buffer.toString("utf-8");
 

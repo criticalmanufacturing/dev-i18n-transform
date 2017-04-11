@@ -118,10 +118,10 @@ export class TypescriptParser implements Parser {
         for (const sourceFile of this._program.getSourceFiles()) {
             if (sourceFile.fileName.indexOf("node_modules/") < 0) {
                 let filename = path.basename(sourceFile.fileName);
-                let match = /(\w+)\.(\w+)/.exec(filename);
+                let match = File.parseFileName(filename);
 
-                this._fileName = match[1];
-                this._currentLanguage = match[2] === "default" ? "en-US" : match[2];
+                this._fileName = match.name;
+                this._currentLanguage = match.language === "default" ? "en-US" : match.language;
 
                 ts.forEachChild(sourceFile, this.fileParse);
             }

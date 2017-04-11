@@ -5,12 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "build": "node node_modules/typescript/bin/tsc",
-    "start": "node node_modules/nodemon/bin/nodemon src/index.js --ignore tests/",
-    "test": "node node_modules/mocha/bin/mocha tests/**/*.js tests/*.js --timeout 5000",
+    "start": "node node_modules/nodemon/bin/nodemon src/index.js --ignore test/",
+    "test": "node node_modules/mocha/bin/mocha test/**/*.js test/*.js --timeout 5000",
     "vs:buildAndTest": "npm run build && npm run vs:test",
-    "vs:test": "node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha --report cobertura --report lcov tests/*.js tests/**/*.js -- --timeout 5000 --reporter mocha-junit-reporter --reporter-options mochaFile=./tests/test-results.xml",
+    "vs:test": "node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha --report cobertura --report lcov test/*.js test/**/*.js -- --timeout 5000 --reporter mocha-junit-reporter --reporter-options mochaFile=./test/test-results.xml",
     "pretest": "npm run build",
-    "watch": "npm run build -- -w | node node_modules/mocha/bin/mocha --timeout 5000 --reporter min -w tests/*.js tests/**/*.js"
+    "watch": "npm run build -- -w | node node_modules/mocha/bin/mocha --timeout 5000 --reporter min -w test/*.js test/**/*.js"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",

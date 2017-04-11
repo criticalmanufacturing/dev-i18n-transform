@@ -30,5 +30,16 @@
         "typescript",
         "typescriptreact",
         "yml"
+    ],
+    "cSpell.ignorePaths": [
+        "**/node_modules/**",
+        "**/vscode-extension/**",
+        "**/.git/**",
+        ".vscode",
+        "typings",
+        "**/test/mocks/**"
+    ],
+    "tslint.exclude": [
+        "**/test/mocks/**"
     ]
 }

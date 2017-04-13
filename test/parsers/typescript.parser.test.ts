@@ -17,7 +17,7 @@ describe("Typescript parser", () => {
         chai.expect(pack.files).to.have.length(1);
 
         let file = pack.files[0];
-        chai.expect(file.uniqueFileName).to.contain("/mock.ts");
+        chai.expect(file.uniqueFileName).to.contain("mock.ts");
         chai.expect(file.messages).to.have.length(2);
 
         let messageOne = file.getMessage("ONE");
@@ -58,7 +58,7 @@ describe("Typescript parser", () => {
         chai.expect(pack.files).to.have.length(1);
 
         let file = pack.files[0];
-        chai.expect(file.uniqueFileName).to.contain("/mock.ts");
+        chai.expect(file.uniqueFileName).to.contain("mock.ts");
         chai.expect(file.messages).to.have.length(messageIds.length);
 
         let messageOne = file.getMessage("ONE");
@@ -95,7 +95,7 @@ describe("Typescript parser", () => {
         chai.expect(pack.files).to.have.length(2);
 
         let file = pack.files[1];
-        chai.expect(file.uniqueFileName).to.contain("/mock.ts");
+        chai.expect(file.uniqueFileName).to.contain("mock.ts");
         chai.expect(file.messages).to.have.length(messageIds.length);
 
         let messageOne = file.getMessage("ONE");

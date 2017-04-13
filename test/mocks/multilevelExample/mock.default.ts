@@ -7,6 +7,9 @@
         WIZARD: "Wizard"
     },
     menu: {
+        /**
+         * This is a comment!
+         */
         DASHBOARDS: "Dashboards"
     },
     pages: {

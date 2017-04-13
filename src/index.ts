@@ -10,13 +10,13 @@ import { WriterFactory } from "./writers/index";
 
 let parser = ParserFactory.getParser("test",
     [
-        path.join(__dirname, "../test/mocks/crossReferenceExample/mock.default.ts"),
-        path.join(__dirname, "../test/mocks/crossReferenceExample/mock.pt-PT.ts")
+        path.join(__dirname, "../test/mocks/multilevelExample/mock.default.ts"),
+        path.join(__dirname, "../test/mocks/multilevelExample/mock.pt-PT.ts")
     ]
 );
 let pack = parser.run();
 
-let writer = WriterFactory.getWriter(pack.files, "pt-PT");
+let writer = WriterFactory.getWriter(pack, "pt-PT");
 let buffer = writer.run();
 let result = buffer.toString("utf-8");
 

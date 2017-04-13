@@ -4,18 +4,19 @@ import { File } from "../model/file";
 import { Writer } from "./writer.interface";
 import { Message } from "../model/message";
 import Util from "../util";
+import { Package } from "../model/package";
 
 const projectInfo = Util.getProjectInformation();
 
 export class PoWriter implements Writer {
 
-    private _files: File[];
+    private _package: Package;
     private _language: string;
 
     private _fileHeader: string;
 
-    constructor(files: File[], language: string) {
-        this._files = files;
+    constructor(pack: Package, language: string) {
+        this._package = pack;
         this._language = language;
 
         this._fileHeader = `
@@ -85,7 +86,7 @@ msgstr ""
 
         let fileHeaderBuffer = new Buffer(this._fileHeader);
 
-        let buffers = this._files.map((file) => {
+        let buffers = this._package.files.map((file) => {
             return this.writeFile(file);
         });
 

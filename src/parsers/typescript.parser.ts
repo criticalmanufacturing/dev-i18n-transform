@@ -122,8 +122,10 @@ export class TypescriptParser implements Parser {
                                     let nodeText = paNode.initializer.getText();
                                     nodeText = nodeText.slice(1, -1);
 
+                                    let { line, character } = tsSourceFile.getLineAndCharacterOfPosition(paNode.initializer.getStart());
+
                                     let message = new Message(identifierPath.map((id) => id.name).concat([paNode.name.getText()]).join("."), messageDescription);
-                                    message.addOrUpdateTranslation(new Translation(this._currentLanguage, nodeText));
+                                    message.addOrUpdateTranslation(new Translation(this._currentLanguage, nodeText, false, line, character));
 
                                     file.addOrUpdateMessage(message);
                                 }
@@ -132,8 +134,10 @@ export class TypescriptParser implements Parser {
                                 {
                                     let nodeText = paNode.initializer.getText();
 
+                                    let { line, character } = tsSourceFile.getLineAndCharacterOfPosition(paNode.initializer.getStart());
+
                                     let message = new Message(identifierPath.map((id) => id.name).concat([paNode.name.getText()]).join("."), messageDescription);
-                                    message.addOrUpdateTranslation(new Translation(this._currentLanguage, nodeText, true));
+                                    message.addOrUpdateTranslation(new Translation(this._currentLanguage, nodeText, true, line, character));
 
                                     file.addOrUpdateMessage(message);
                                 }

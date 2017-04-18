@@ -1,6 +1,28 @@
 import * as chai from "chai";
 import { Message } from "../../src/model/message";
 import { Translation } from "../../src/model/translation";
+import { MockTranslation, createTranslation } from "./translation.test";
+
+export interface MockMessage {
+    id: string;
+    description?: string;
+    translations: MockTranslation[];
+}
+
+/**
+ * Creates a Message based on a mock message
+ * @param msgMock Mock message to serve as reference to create a real Message
+ * @return A new instance of a message, based on the mock
+ */
+export function createMessage(msgMock: MockMessage): Message {
+    let msg = new Message(msgMock.id, msgMock.description);
+
+    msgMock.translations.forEach((translation) => {
+        msg.addOrUpdateTranslation(createTranslation(translation));
+    });
+
+    return msg;
+}
 
 describe("Message Model", () => {
 

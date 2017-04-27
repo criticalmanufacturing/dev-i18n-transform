@@ -11,6 +11,20 @@ export class Util {
     }
 
     /**
+     * Splits a string by empty lines into multiple pieces.
+     * @example
+     * // returns ["a", "b"]
+     * util.splitByEmptyLine("a
+     *
+     * b");
+     * @param fileContent File content to be split
+     * @returns Content of the file split on every empty line.
+     */
+    public splitByEmptyLine(fileContent: string): string[] {
+        return fileContent.split(/\n{2,}/g, ).filter((entry) => entry != null && entry !== "");
+    }
+
+    /**
      * Gets the default language code
      */
     public defaultLanguage: string = "en-US";

@@ -19,7 +19,11 @@ export class PoWriter implements Writer {
         this._package = pack;
         this._language = language;
 
-        this._fileHeader = `
+        this._fileHeader = `# Critical Manufacturing Translation File
+# Copyright (C) ${new Date().getFullYear()} Critical Manufacturing S.A.
+# This file is distributed under the GPL 3.0 License
+# For more information contact@criticalmanufacturing.com
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ${projectInfo.name} ${projectInfo.version} \\n"

@@ -8,7 +8,7 @@ import { ParserFactory } from "./parsers/index";
 import { Package } from "./model/package";
 import { WriterFactory } from "./writers/index";
 
-let parser = ParserFactory.getParser("test",
+let parser = ParserFactory.getParser(path.join(__dirname, ".."),
     [
         path.join(__dirname, "../test/mocks/multilevelExample/mock.default.ts"),
         path.join(__dirname, "../test/mocks/multilevelExample/mock.pt-PT.ts")

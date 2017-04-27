@@ -30,12 +30,17 @@ export class File {
         });
     }
 
-    constructor(filename: string) {
+    /**
+     * File model constructor
+     * @param filename Path to the file to create
+     * @param packagePath Path of the package where the file is in
+     */
+    constructor(filename: string, packagePath?: string) {
 
-        let match = File.parseFileName(filename);
+        let match = File.parseFileName(filename, packagePath);
         this._filename = match.name;
         this._extension = match.extension;
-        this._dirname = path.dirname(filename);
+        this._dirname = match.path;
     }
 
     /**
@@ -99,7 +104,7 @@ export class File {
      * @param filename Filename to parse
      * @return Decomposed file name
      */
-    public static parseFileName(filename: string): {name: string, language: string, extension: string} {
+    public static parseFileName(filename: string, packagePath?: string): {name: string, language: string, extension: string, path: string} {
 
         if (!filename) {
             throw new Error("Argument 'filename' cannot be undefined");
@@ -111,10 +116,14 @@ export class File {
             throw new Error(`Filename '${filename}' doesn't match the correct format`);
         }
 
+        // If package name is defined, use relative path
+        let filePath: string = packagePath != null ? path.relative(packagePath, filename) : filename;
+
         return {
             name: match[1],
             language: match[2],
-            extension: match[3]
+            extension: match[3],
+            path: path.dirname(filePath)
         };
     }
 }

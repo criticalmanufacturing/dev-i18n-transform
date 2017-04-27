@@ -1,3 +1,4 @@
+import * as path from "path";
 import {File} from "./file";
 
 export class Package {
@@ -5,6 +6,11 @@ export class Package {
      * Gets the package name
      */
     public readonly name: string;
+
+    /**
+     * Gets the package path (including the package name)
+     */
+    public readonly path: string;
 
     private readonly _files: {[key: string]: File} = {};
 
@@ -19,10 +25,11 @@ export class Package {
 
     /**
      * Creates a new Package structure
-     * @param name Name of the package
+     * @param packagePath Name of the package
      */
-    constructor(name: string) {
-        this.name = name;
+    constructor(packagePath: string) {
+        this.path = packagePath;
+        this.name = path.dirname(packagePath);
     }
 
     /**
@@ -34,6 +41,11 @@ export class Package {
         return file.uniqueFileName in this._files;
     }
 
+    /**
+     * Adds a file to the package.
+     * If the a file with the same with the same identifier already exists in the package, it's merged {@see File.merge} with the existing one.
+     * @param file File to be added or updated.
+     */
     public addOrUpdateFile(file: File): void {
         if (this.hasFile(file)) {
             this._files[file.uniqueFileName].merge(file);

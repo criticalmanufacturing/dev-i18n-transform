@@ -43,7 +43,7 @@ msgstr ""
 
         // Reference to original source file
         result.push(`#: ${currentFile.translatedFileName(this._language)}`);
-        result.push(`#| msgid ${message.id}`);
+        result.push(`#: ${message.id}`);
         // If there is a comment on the resource, insert it as msg context
         if (message.description) {
             result.push(`msgctxt "${message.description}"`);

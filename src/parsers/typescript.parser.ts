@@ -50,15 +50,16 @@ export class TypescriptParser implements Parser {
     /**
      * Package name
      */
-    private _packageName: string;
+    private _packagePath: string;
 
     /**
      * Typescript File(s) Analyser
+     * @param packagePath Absolute package path
      * @param filePaths File paths to analyse
      */
-    constructor(packageName: string, filePaths: string[]) {
+    constructor(packagePath: string, filePaths: string[]) {
         this._filePaths = filePaths;
-        this._packageName = packageName;
+        this._packagePath = packagePath;
 
         this._program = ts.createProgram(filePaths, {
             target: ts.ScriptTarget.ES5,
@@ -70,10 +71,15 @@ export class TypescriptParser implements Parser {
 
     private fileParse = (node: ts.Node): void => {
 
+        // Each file should start with an export assignment.
+        // When we find a node of that kind, it means we have a new file in our structure.
+        // If the typescript file imports any other file, let's save that reference for later reuse.
+        // After, we move to parse the remaining file nodes.
+
         switch (node.kind) {
             case ts.SyntaxKind.ExportAssignment:
                 let tsSourceFile = node.getSourceFile();
-                let file: File = new File(tsSourceFile.fileName);
+                let file: File = new File(tsSourceFile.fileName, this._packagePath);
 
                 // Add references
                 for (let ref of (<any>tsSourceFile).imports) {
@@ -97,15 +103,22 @@ export class TypescriptParser implements Parser {
                             break;
                         case ts.SyntaxKind.PropertyAssignment:
 
+                            // When we find a PropertyAssignment node like
+                            // #Comment
+                            // 'propertyIdentifier: propertyInitializer'
+
                             let paNode = <ts.PropertyAssignment>node;
                             let messageDescription = null;
 
+                            // Check if the property as any comment associated
                             let symbol = this._typeChecker.getSymbolAtLocation(paNode.name);
                             if (symbol != null) {
                                 messageDescription = ts.displayPartsToString(symbol.getDocumentationComment());
                             }
 
                             // Find node bearing
+                            // From one property to the next, we need to check if we are on the correct
+                            // depth of our tree structure
                             for (let i = identifierPath.length - 1; i >= 0; i--) {
                                 if (identifierPath[i].node === node.parent.parent) {
                                     break;
@@ -114,7 +127,12 @@ export class TypescriptParser implements Parser {
                                 identifierPath.pop();
                             }
 
+                            // Depending on the property initializer, we have to handle it differently
                             switch (paNode.initializer.kind) {
+                                // If we have a string literal (ex: property1: "Property1Value")
+                                // Or if we have a binary expression (ex: property1: i18nControls.LABEL + "abc")
+                                // Or if we have a template expression (ex: property1: `This is a template string ${i18nControls.LABEL}`)
+                                // We need to remove the first and last char, get the line and char position, and get the translation
                                 case ts.SyntaxKind.StringLiteral:
                                 case ts.SyntaxKind.BinaryExpression:
                                 case ts.SyntaxKind.TemplateExpression:
@@ -130,6 +148,8 @@ export class TypescriptParser implements Parser {
                                     file.addOrUpdateMessage(message);
                                 }
                                     break;
+                                // If we have a property access (ex: property1: i18nControls.LABEL)
+                                // We just use that value as the translation itself
                                 case ts.SyntaxKind.PropertyAccessExpression:
                                 {
                                     let nodeText = paNode.initializer.getText();
@@ -142,9 +162,12 @@ export class TypescriptParser implements Parser {
                                     file.addOrUpdateMessage(message);
                                 }
                                     break;
+                                // If we have an object literal (ex: property1: {...})
+                                // We create a new node on our tree, and move to parse the object
                                 case ts.SyntaxKind.ObjectLiteralExpression:
                                     identifierPath.push({name: paNode.name.getText(), node: paNode});
                                     break;
+                                // Else, we log a warning for future reference and continue
                                 default:
                                     logger.warning("Unhandled property identifier", {
                                         kind: ts.SyntaxKind[paNode.initializer.kind],
@@ -167,8 +190,13 @@ export class TypescriptParser implements Parser {
         }
     }
 
+    /**
+     * Run the typescript parser.
+     * @returns A fully loaded package, describing all i18n files of the package.
+     */
     public run(): Package {
         logger.info(`Starting Typescript parse`, {
+            package: this._packagePath,
             paths: this._filePaths
         });
 
@@ -186,7 +214,7 @@ export class TypescriptParser implements Parser {
             }
         }
 
-        let pack: Package = new Package(this._packageName);
+        let pack: Package = new Package(this._packagePath);
         for (let file of this._files) {
             pack.addOrUpdateFile(file);
         }

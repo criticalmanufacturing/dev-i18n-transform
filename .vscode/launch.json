@@ -8,7 +8,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Start Server",
+            "name": "Start Application",
             "program": "${workspaceRoot}/src/index.js",
             "preLaunchTask": "build",
             "cwd": "${workspaceRoot}",

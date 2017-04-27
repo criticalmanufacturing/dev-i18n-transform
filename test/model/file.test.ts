@@ -1,4 +1,5 @@
 import * as chai from "chai";
+import * as path from "path";
 import { File } from "../../src/model/file";
 import { MockMessage, createMessage } from "./message.test";
 
@@ -33,6 +34,11 @@ describe("File model", () => {
                 chai.expect(error).to.exist;
                 chai.expect(error.message).to.contain("doesn't match the correct format");
             }
+        });
+
+        it("should use a relative file path if the package path is provided", () => {
+            let file = new File(path.join(__dirname, "src", "mock.default.ts"), __dirname);
+            chai.expect(file.uniqueFileName).to.be.equal(path.join("src", "mock.ts"));
         });
     });
 });

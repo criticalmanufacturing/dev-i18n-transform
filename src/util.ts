@@ -21,7 +21,7 @@ export class Util {
      * @returns Content of the file split on every empty line.
      */
     public splitByEmptyLine(fileContent: string): string[] {
-        return fileContent.split(/\n{2,}/g, ).filter((entry) => entry != null && entry !== "");
+        return fileContent.replace(/\r/g, "").split(/\n{2,}/g).filter((entry) => entry != null && entry.trim() !== "");
     }
 
     /**

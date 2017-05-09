@@ -9,7 +9,7 @@
         "**/*.d.ts": { "when": "$(basename).ts"},
         "**/*.js.map": true
     },
-    "vsicons.presets.angular": false,
+    "editor.wordWrap": "on",
     "typescript.tsdk": "./node_modules/typescript/lib",
     
     "cSpell.enabled": true,

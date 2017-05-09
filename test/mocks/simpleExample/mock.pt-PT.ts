@@ -1,4 +1,5 @@
 export default {
     ONE: "Um",
-    TWO: "Dois"
+    TWO: "Dois",
+    THREE: "Três"
 };

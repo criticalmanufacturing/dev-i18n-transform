@@ -3,5 +3,6 @@ export default {
      * Property comments
      */
     ONE: "One",
-    TWO: "Two"
+    TWO: "Two",
+    THREE: "Three"
 };

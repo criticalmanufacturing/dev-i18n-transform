@@ -18,7 +18,7 @@ describe("Typescript parser", () => {
 
         let file = pack.files[0];
         chai.expect(file.uniqueFileName).to.contain("mock.ts");
-        chai.expect(file.messages).to.have.length(2);
+        chai.expect(file.messages).to.have.length(3);
 
         let messageOne = file.getMessage("ONE");
         chai.expect(messageOne).to.exist;

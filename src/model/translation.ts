@@ -21,3 +21,15 @@ export class Translation {
         this.column = col;
     }
 }
+
+export enum TranslatorNotes {
+    AutomaticTranslation = 1
+}
+
+/**
+ * Notes for translators.
+ * Keys are based on {@see TranslatorNotes} enumeration.
+ */
+export const TRANSLATOR_NOTES: {[key: number]: string} = Object.freeze({
+    1: "001 | Automatic Translation"
+});

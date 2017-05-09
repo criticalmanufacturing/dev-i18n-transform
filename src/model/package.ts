@@ -29,7 +29,7 @@ export class Package {
      */
     constructor(packagePath: string) {
         this.path = packagePath;
-        this.name = path.dirname(packagePath);
+        this.name = path.basename(packagePath);
     }
 
     /**

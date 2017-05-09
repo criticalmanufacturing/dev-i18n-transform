@@ -22,7 +22,25 @@ let result = buffer.toString("utf-8");
 
 fs.writeFile("C:\\Temp\\i18n.po", buffer, () => {
     console.log("File written to the disk!");
-    process.exit(0);
+
+        let parser = ParserFactory.getParser(path.join(__dirname, ".."),
+        [
+            path.join(__dirname, "../test/mocks/crossReferenceExample/mock.default.ts"),
+            path.join(__dirname, "../test/mocks/crossReferenceExample/mock.pt-PT.ts")
+        ]
+    );
+    let pack = parser.run();
+
+    let writer = WriterFactory.getWriter(pack, "pt-PT");
+    let buffer = writer.run();
+    let result = buffer.toString("utf-8");
+
+    fs.writeFile("C:\\Temp\\i18n.complex.po", buffer, () => {
+        console.log("File written to the disk!");
+        process.exit(0);
+    });
+    // process.exit(0);
 });
+
 
 // console.dir(pack);

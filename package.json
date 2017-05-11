@@ -1,7 +1,7 @@
 {
-  "name": "cmf.dev.i18n",
+  "name": "@criticalmanufacturing/dev-i18n-transform",
   "version": "0.0.1",
-  "description": "i18n <--> gettext tool",
+  "description": "i18n <--> gettext transform",
   "main": "src/index.js",
   "scripts": {
     "build": "node node_modules/typescript/bin/tsc",
@@ -35,22 +35,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/criticalmanufacturing/cmf.dev.i18n.git"
+    "url": "git+https://github.com/criticalmanufacturing/dev-i18n-transform.git"
   },
   "keywords": [
     "CMF",
     "UXFAB",
     "PO",
     "i18n",
-    "PO",
+    "Typescript",
     "POT"
   ],
   "author": "Critical Manufacturing",
   "license": "SEE LICENSE IN \"license\"",
   "bugs": {
-    "url": "https://github.com/criticalmanufacturing/cmf.dev.i18n/issues"
+    "url": "https://github.com/criticalmanufacturing/dev-i18n-transform/issues"
   },
-  "homepage": "https://github.com/criticalmanufacturing/cmf.dev.i18n#readme",
+  "homepage": "https://github.com/criticalmanufacturing/dev-i18n-transform#readme",
   "dependencies": {
     "js-beautify": "^1.6.12",
     "winston": "^2.3.1",

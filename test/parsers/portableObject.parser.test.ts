@@ -59,5 +59,7 @@ describe("Portable Object Parser", () => {
         chai.expect(mockTwoMessage).to.exist;
         chai.expect(mockTwoMessage.getTranslation("pt-PT").isLiteral).to.be.false;
         chai.expect(mockTwoMessage.getTranslation("pt-PT").text).to.equal("Este é um preâmbulo com ${i18n.TWO} problemas");
+
+        chai.expect(mockFile.references).to.have.length(1);
     });
 });

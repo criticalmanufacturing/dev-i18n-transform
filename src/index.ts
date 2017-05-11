@@ -18,7 +18,7 @@ let pack = parser.run();
 
 let writer = WriterFactory.getWriter(pack, "pt-PT");
 let buffer = writer.run();
-let result = buffer.toString("utf-8");
+let result = buffer[0].content.toString("utf-8");
 
 fs.writeFile("C:\\Temp\\i18n.po", buffer, () => {
     console.log("File written to the disk!");
@@ -33,7 +33,7 @@ fs.writeFile("C:\\Temp\\i18n.po", buffer, () => {
 
     let writer = WriterFactory.getWriter(pack, "pt-PT");
     let buffer = writer.run();
-    let result = buffer.toString("utf-8");
+    let result = buffer[0].content.toString("utf-8");
 
     fs.writeFile("C:\\Temp\\i18n.complex.po", buffer, () => {
         console.log("File written to the disk!");

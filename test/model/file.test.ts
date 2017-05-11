@@ -5,6 +5,7 @@ import { MockMessage, createMessage } from "./message.test";
 
 export interface MockFile {
     name: string;
+    references?: string[];
     messages: MockMessage[];
 }
 
@@ -13,6 +14,12 @@ export function createFile(fileMock: MockFile): File {
     fileMock.messages.forEach((m) => {
         file.addOrUpdateMessage(createMessage(m));
     });
+
+    if (Array.isArray(fileMock.references)) {
+        fileMock.references.forEach((ref) => {
+            file.addReference(ref);
+        });
+    }
 
     return file;
 }

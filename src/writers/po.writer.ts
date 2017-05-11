@@ -1,7 +1,7 @@
 import * as os from "os";
 
 import { File } from "../model/file";
-import { Writer } from "./writer.interface";
+import { Writer, FileOutputInformation } from "./writer.interface";
 import { Message } from "../model/message";
 import Util from "../util";
 import { Package } from "../model/package";
@@ -110,7 +110,7 @@ msgstr ""
      * Run the writer
      * @returns Buffer containing the file content
      */
-    public run(): Buffer {
+    public run(): FileOutputInformation[] {
 
         let fileHeaderBuffer = new Buffer(this._fileHeader);
 
@@ -118,6 +118,9 @@ msgstr ""
             return this.writeFile(file);
         });
 
-        return Buffer.concat([fileHeaderBuffer].concat(buffers));
+        return [{
+            file: `${this._package.name}.po`,
+            content: Buffer.concat([fileHeaderBuffer].concat(buffers))
+        }];
     }
 }

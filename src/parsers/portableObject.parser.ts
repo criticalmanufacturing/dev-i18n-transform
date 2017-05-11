@@ -80,13 +80,20 @@ export class PortableObjectParser implements Parser {
         message.addOrUpdateTranslation(translation);
 
         let file = new File(fileInfo.filePath);
+
+        if (fileInfo.references && fileInfo.references.length > 0) {
+            for (let ref of fileInfo.references) {
+                file.addReference(ref);
+            }
+        }
+
         file.addOrUpdateMessage(message);
 
         // Add the file to the package
         this._package.addOrUpdateFile(file);
     }
 
-    private extractFileInformation(info: string): {filePath: string, objectPath: string, details: any} {
+    private extractFileInformation(info: string): {filePath: string, objectPath: string, details: any, references: string[]} {
 
         // Extract file information from row
         // #: test\mocks\multilevelExample\mock.pt-PT.ts#objects.WIZARD
@@ -98,10 +105,34 @@ export class PortableObjectParser implements Parser {
         let filePath = fileAndObjectMatch[1];
         let objectPath = fileAndObjectMatch[2];
 
+        // Extract file information from row
+        // # AddReference | import i18n from "./reference.default";
+
+        let references: string[] = [];
+
+        let referencesMatch = info.match(/^# (.+) \| (.+)$/gm);
+        if (referencesMatch != null && referencesMatch.length > 0) {
+
+            for (let i = 0; i < referencesMatch.length; i++) {
+                let ref = /^# (.+) \| (.+)$/.exec(referencesMatch[i]);
+                let typeOfComment = ref[1];
+
+                switch (typeOfComment) {
+                    case "AddReference":
+                        references.push(ref[2]);
+                        break;
+                    default:
+                        logger.warning(`Unknown type of entry found: '${typeOfComment}'`);
+                        break;
+                }
+            }
+        }
+
         return {
             filePath: filePath,
             objectPath: objectPath,
-            details: File.parseFileName(filePath)
+            details: File.parseFileName(filePath),
+            references: references
         };
     }
 

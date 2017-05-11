@@ -3,9 +3,6 @@ import { Util } from "../src/util";
 
 describe("Utilities test", () => {
     let util = new Util();
-    before(() => {
-
-    });
 
     it("should split a string by empty lines", () => {
         let stringToSplit = `# Critical Manufacturing Translation File
@@ -64,5 +61,13 @@ msgid "Widget"
 msgstr "Widget"`
         );
 
+    });
+
+    it("should get the correct project version information", () => {
+        let projectInfo = util.getProjectInformation();
+        let packageJsonInfo = require("../package.json");
+
+        chai.expect(projectInfo.name).to.equal(packageJsonInfo.name);
+        chai.expect(projectInfo.version).to.equal(packageJsonInfo.version);
     });
 });

@@ -17,10 +17,11 @@ export class WriterFactory {
      * @param language Language to write to
      * @returns An instance of a writer for the specified language
      */
-    public static getWriter(pack: Package, outputLanguage: string, language: "pot" | "ts" = "pot"): Writer {
+    public static getWriter(pack: Package, outputLanguage: string, language: "ts" | "po" | "pot"): Writer {
         let writer: Writer;
 
         switch (language) {
+            case "po":
             case "pot":
                 writer = new PoWriter(pack, outputLanguage);
                 break;

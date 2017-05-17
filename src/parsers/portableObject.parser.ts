@@ -50,7 +50,7 @@ export class PortableObjectParser implements Parser {
             let headerInfo = this.parseHeader(entries[0]);
 
             if (headerInfo.packageName !== this._package.name) {
-                logger.warning(`The package '${this._package.name}' doesn't match the original package name saved on the header of '${filePath}'`);
+                logger.warn(`The package '${this._package.name}' doesn't match the original package name saved on the header of '${filePath}'`);
             }
 
             // Remove the first element of the array
@@ -61,7 +61,7 @@ export class PortableObjectParser implements Parser {
             }
         } else {
             // File contains no entries. Raise a warning
-            logger.warning(`File '${filePath}' as no entries. Continuing...`);
+            logger.warn(`File '${filePath}' as no entries. Continuing...`);
         }
     }
 
@@ -122,7 +122,7 @@ export class PortableObjectParser implements Parser {
                         references.push(ref[2]);
                         break;
                     default:
-                        logger.warning(`Unknown type of entry found: '${typeOfComment}'`);
+                        logger.warn(`Unknown type of entry found: '${typeOfComment}'`);
                         break;
                 }
             }
@@ -171,7 +171,7 @@ export class PortableObjectParser implements Parser {
 
             // Validate that this not exists
             if (!(noteId in TranslatorNotes)) {
-                logger.warning(`Unknown translator note '${match[0]}'`);
+                logger.warn(`Unknown translator note '${match[0]}'`);
             } else {
                 notes.push(noteId);
             }

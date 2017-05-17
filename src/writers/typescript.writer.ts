@@ -37,7 +37,9 @@ export class TypescriptWriter implements Writer {
 
         file.messages.map((msg) => {
             let translation = msg.getTranslation(this._language);
-            this._util.setNestedPropertyByArray(literal, msg.id.split("."), translation, true);
+            if (translation.text != null && typeof translation.text === "string" && translation.text.length > 0) {
+                this._util.setNestedPropertyByArray(literal, msg.id.split("."), translation, true);
+            }
         });
 
         let outputText = `export default ${this.stringifyTS(literal)};`;

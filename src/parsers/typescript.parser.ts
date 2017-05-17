@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import logger from "../logger/index";
+import { ValidatorFactory, ValidationResult } from "../validators/index";
 import { File } from "../model/file";
 import { Message } from "../model/message";
 import { Parser } from "./parser.interface";
@@ -220,6 +221,16 @@ export class TypescriptParser implements Parser {
         for (let file of this._files) {
             pack.addOrUpdateFile(file);
         }
+
+        // Validate package
+        let validationResults: ValidationResult[] = ValidatorFactory.validate(pack);
+        validationResults.forEach((validationResult) => {
+            logger.warn(validationResult.message, {
+                file: validationResult.file.uniqueFileName,
+                line: validationResult.line,
+                col: validationResult.col
+            });
+        });
 
         return pack;
     }

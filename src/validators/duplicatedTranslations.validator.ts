@@ -1,8 +1,8 @@
-import { ValidationResult, ValidationResultType } from "./validator.interface";
+import { Validator, ValidationResult, ValidationResultType } from "./validator.interface";
 import { Package } from "../model/package";
 import Util from "../util";
 
-export class DuplicatedTranslationsValidator {
+export class DuplicatedTranslationsValidator implements Validator {
 
     private _pack: Package;
 
@@ -28,6 +28,7 @@ export class DuplicatedTranslationsValidator {
 
                 if (knownTranslations.has(translatedMessage.text)) {
                     validationResults.push({
+                        file: file,
                         type: ValidationResultType.Error,
                         message: `Duplicated resource '${translatedMessage.text}' for ${Util.defaultLanguage}`,
                         col: translatedMessage.column,

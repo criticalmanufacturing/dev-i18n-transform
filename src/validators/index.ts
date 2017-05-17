@@ -18,10 +18,16 @@ export class ValidatorFactory {
         if (pack.files != null && pack.files.length > 0) {
             language = path.extname(pack.files[0].uniqueFileName);
         }
+        else {
+            return validators;
+        }
 
         switch (language) {
             case ".ts":
                 validators.push(new DuplicatedTranslationsValidator(pack));
+                break;
+            case ".po":
+                // none yet
                 break;
             default:
                 throw new Error("Not Implemented Yet");

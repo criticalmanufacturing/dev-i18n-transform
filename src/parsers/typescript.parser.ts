@@ -151,6 +151,7 @@ export class TypescriptParser implements Parser {
                                     break;
                                 // If we have a property access (ex: property1: i18nControls.LABEL)
                                 // We just use that value as the translation itself
+                                case ts.SyntaxKind.Identifier:
                                 case ts.SyntaxKind.PropertyAccessExpression:
                                 {
                                     let nodeText = paNode.initializer.getText();

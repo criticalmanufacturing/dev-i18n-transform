@@ -63,7 +63,8 @@ export class TypescriptParser implements Parser {
 
         this._program = ts.createProgram(filePaths, {
             target: ts.ScriptTarget.ES5,
-            module: ts.ModuleKind.System
+            module: ts.ModuleKind.System,
+            rootDir: process.cwd()
         });
 
         this._typeChecker = this._program.getTypeChecker();

@@ -12,13 +12,14 @@ export class ParserFactory {
      * @param paths File paths to analyse
      * @param language Language to analyse
      */
-    public static getParser(packageName: string, paths: string[]): Parser {
+    public static getParser(packageName: string, paths: string[], language?: string): Parser {
         let parser: Parser;
-        let language: string;
 
         // Check the first path to get the type of parsers needed
-        if (paths != null && paths.length > 0) {
-            language = path.extname(paths[0]);
+        if (!language) {
+            if (paths != null && paths.length > 0) {
+                language = path.extname(paths[0]);
+            }
         }
 
         switch (language) {
@@ -26,6 +27,7 @@ export class ParserFactory {
                 parser = new TypescriptParser(packageName, paths);
                 break;
             case ".po":
+            case ".pot":
                 parser = new PortableObjectParser(packageName, paths);
                 break;
             default:

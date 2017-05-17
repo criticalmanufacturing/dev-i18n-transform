@@ -86,7 +86,8 @@ describe("Typescript parser", () => {
             "TWO",
             "THREE",
             "FOUR",
-            "FIVE"
+            "FIVE",
+            "OTHER_NODE"
         ];
 
         let ts = new TypescriptParser("test", mocksPaths);

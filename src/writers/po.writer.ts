@@ -119,7 +119,7 @@ msgstr ""
         });
 
         return [{
-            file: `${this._package.name}.po`,
+            file: `${this._package.name}.${this._language}.po`,
             content: Buffer.concat([fileHeaderBuffer].concat(buffers))
         }];
     }

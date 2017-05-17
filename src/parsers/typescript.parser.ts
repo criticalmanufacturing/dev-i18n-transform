@@ -204,7 +204,7 @@ export class TypescriptParser implements Parser {
         this._files = [];
 
         for (const sourceFile of this._program.getSourceFiles()) {
-            if (sourceFile.fileName.indexOf("node_modules/") < 0) {
+            if (sourceFile.fileName.indexOf("node_modules/") < 0 && sourceFile.fileName.indexOf(this._packagePath) >= 0) {
                 let filename = path.basename(sourceFile.fileName);
                 let match = File.parseFileName(filename);
 

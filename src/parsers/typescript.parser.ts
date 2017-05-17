@@ -59,8 +59,8 @@ export class TypescriptParser implements Parser {
      * @param filePaths File paths to analyse
      */
     constructor(packagePath: string, filePaths: string[]) {
-        this._filePaths = filePaths;
-        this._packagePath = packagePath;
+        this._filePaths = filePaths.map(path.normalize);
+        this._packagePath = path.normalize(packagePath);
 
         this._program = ts.createProgram(filePaths, {
             target: ts.ScriptTarget.ES5,
@@ -206,8 +206,9 @@ export class TypescriptParser implements Parser {
         this._files = [];
 
         for (const sourceFile of this._program.getSourceFiles()) {
-            if (sourceFile.fileName.indexOf("node_modules/") < 0 && sourceFile.fileName.indexOf(this._packagePath) >= 0) {
-                let filename = path.basename(sourceFile.fileName);
+            let sourceFilename = path.normalize(sourceFile.fileName);
+            if (sourceFilename.indexOf("node_modules\\") < 0 && sourceFilename.indexOf(this._packagePath) >= 0) {
+                let filename = path.basename(sourceFilename);
                 let match = File.parseFileName(filename);
 
                 this._fileName = match.name;

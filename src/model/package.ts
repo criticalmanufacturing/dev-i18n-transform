@@ -28,7 +28,7 @@ export class Package {
      * @param packagePath Name of the package
      */
     constructor(packagePath: string) {
-        this.path = packagePath;
+        this.path = path.normalize(packagePath);
         this.name = path.basename(packagePath);
     }
 

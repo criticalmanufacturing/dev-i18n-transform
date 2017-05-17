@@ -171,7 +171,7 @@ export class TypescriptParser implements Parser {
                                     break;
                                 // Else, we log a warning for future reference and continue
                                 default:
-                                    logger.warning("Unhandled property identifier", {
+                                    logger.warn("Unhandled property identifier", {
                                         kind: ts.SyntaxKind[paNode.initializer.kind],
                                         node: paNode
                                     });
@@ -186,9 +186,9 @@ export class TypescriptParser implements Parser {
                     ts.forEachChild(node, nodeParser);
                 };
 
-            nodeParser(node);
-            this._files.push(file);
-            break;
+                nodeParser(node);
+                this._files.push(file);
+                break;
         }
     }
 

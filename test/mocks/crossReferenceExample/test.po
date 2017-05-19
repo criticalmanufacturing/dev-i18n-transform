@@ -1,0 +1,45 @@
+# Critical Manufacturing Translation File
+# Copyright (C) 2017 Critical Manufacturing S.A.
+# This file is distributed under the GPL 3.0 License
+# For more information contact@criticalmanufacturing.com
+# OriginalPackageName: test
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: cmf.dev.i18n 0.0.1 \n"
+"Report-Msgid-Bugs-To: support@criticalmanufacturing.com \n"
+"Language-Team: cmf.dev.i18n <info@criticalmanufacturing.com> \n"
+"Language: pt-PT \n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: test\mocks\crossReferenceExample\reference.pt-PT.ts#ONE
+msgid "One"
+msgstr "Um"
+
+#: test\mocks\crossReferenceExample\reference.pt-PT.ts#TWO
+msgid "Two"
+msgstr "Dois"
+
+# AddReference | import i18n from "./reference.default";
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#ONE
+#. 001 | Automatic Translation
+msgid "i18n.ONE"
+msgstr "i18n.ONE"
+
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#TWO
+msgid "This is a preambule with ${i18n.TWO} problems"
+msgstr "Este é um preâmbulo com ${i18n.TWO} problemas"
+
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#THREE
+msgid "Preambule " + i18n.ONE + " Sufix"
+msgstr ""
+
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#FOUR
+msgid "This is a preambule with ${i18n.TWO}"
+msgstr ""
+
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#FIVE
+msgid "Preambule " + i18n.ON"
+msgstr ""
+

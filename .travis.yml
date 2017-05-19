@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- node
+after_success:
+- npm run coveralls
+deploy:
+  provider: npm
+  email: contact@criticalmanufacturing.com
+  api_key:
+    secure: egcIJnoyMGsH9WOqXVcC8bW5tZ60jGMCTEnU+eL0Oo0bYGNAXD26vN82JOk/24HN6hVIypfD0zi6b5kHs81KErIlv19xFEZR5zf78Mv0ys7vWYSG3UZm1QVWpJ6lVwIMIMvabWUNDuZdx+kPpoRgfQ4nAn8VXGmaYIehi1XIVNzMWY95i6JRBCIdeRFezxnF85veXVuyWRlXnt6J/tEoS3EgfkhrYwm9uT0eHLkXOq6gCCnnNAAnqFsj56wlpGW4zbLHIMb1Y/9FWED4GISDYPo3E6ABZhEFB5a9QLTwLdH1zStLWUMm78KFRtTahskCvi5gmWGu4OJx2IXnCcf+TIwyHzmUrf2/yagtLf0RNOtVLAEOyCdxDNdlr5DqR7qlL02oiScbrIN4aDOR5ldHMvzPsIuDofFd7IN5QcHFttDdjiepubgMbgnRjQhdFbv6eumOZp0s+acFcju4bMRsNvxrBZht7JV2wgCAG5zUTvrqTKpw6RSM0NOVkErlPJJY6iPm/C0hVaqCp9UhWpjZqQms504jhEF4UXwKDvmKlK/loRavkjT7LHCTIzr93lV/i6eaLorz7ehpZcSFknexUnzhkWK46iDOuw0KTnLbm3EXg8hIaVwmxrG1I1L1cV33BNNr0YKonp+fRiAuqvvFd3Ir0sYEZkp88dr1AgKcccc=
+  on:
+    tags: true
+    repo: criticalmanufacturing/dev-i18n-transform

@@ -1,0 +1,65 @@
+{
+  "name": "@criticalmanufacturing/dev-i18n-transform",
+  "version": "1.0.0",
+  "description": "i18n <--> gettext transform",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node node_modules/typescript/bin/tsc",
+    "start": "node node_modules/nodemon/bin/nodemon src/index.js --ignore test/",
+    "test": "node node_modules/mocha/bin/mocha test/**/*.js test/*.js --timeout 5000",
+    "cover": "node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha test/**/*.js test/*.js",
+    "coveralls": "node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha --report lcovonly test/**/*.js test/*.js -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "vs:buildAndTest": "npm run build && npm run vs:test",
+    "vs:test": "node node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha --report cobertura --report lcov test/*.js test/**/*.js -- --timeout 5000 --reporter mocha-junit-reporter --reporter-options mochaFile=./test/test-results.xml",
+    "pretest": "npm run build",
+    "watch": "npm run build -- -w | node node_modules/mocha/bin/mocha --timeout 5000 --reporter min -w test/*.js test/**/*.js"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/chai-string": "^1.1.30",
+    "@types/gulp-util": "^3.0.31",
+    "@types/js-beautify": "0.0.29",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.18",
+    "@types/through2": "^2.0.32",
+    "@types/vinyl": "^2.0.0",
+    "@types/winston": "^2.3.2",
+    "@types/yargs": "^6.6.0",
+    "chai": "^3.5.0",
+    "chai-string": "^1.3.0",
+    "coveralls": "^2.13.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.3.0",
+    "mocha-junit-reporter": "^1.13.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.11.0",
+    "tslint": "^4.4.2",
+    "typescript": "^2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criticalmanufacturing/dev-i18n-transform.git"
+  },
+  "keywords": [
+    "CMF",
+    "UXFAB",
+    "PO",
+    "i18n",
+    "Typescript",
+    "POT"
+  ],
+  "author": "Critical Manufacturing",
+  "license": "SEE LICENSE IN \"license\"",
+  "bugs": {
+    "url": "https://github.com/criticalmanufacturing/dev-i18n-transform/issues"
+  },
+  "homepage": "https://github.com/criticalmanufacturing/dev-i18n-transform#readme",
+  "dependencies": {
+    "gulp-util": "^3.0.8",
+    "js-beautify": "^1.6.12",
+    "through2": "^2.0.3",
+    "vinyl": "^2.0.2",
+    "winston": "^2.3.1",
+    "yargs": "^6.6.0"
+  }
+}

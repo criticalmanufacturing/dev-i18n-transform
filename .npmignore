@@ -1,0 +1,7 @@
+.vscode
+*.ts
+!*.d.ts
+test
+tsconfig.json
+tslint.json
+.travis.yml

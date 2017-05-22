@@ -1,6 +1,6 @@
 {
   "name": "@criticalmanufacturing/dev-i18n-transform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "i18n <--> gettext transform",
   "main": "src/index.js",
   "scripts": {
@@ -61,5 +61,8 @@
     "vinyl": "^2.0.2",
     "winston": "^2.3.1",
     "yargs": "^6.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

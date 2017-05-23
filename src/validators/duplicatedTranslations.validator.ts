@@ -24,7 +24,10 @@ export class DuplicatedTranslationsValidator implements Validator {
             file.messages.forEach((message) => {
                 let translatedMessage = message.getTranslation(Util.defaultLanguage);
 
+                // skip null translations
                 if (!translatedMessage) return;
+                // skip literal translations - they don't need to be validated
+                if (translatedMessage.isLiteral) return;
 
                 if (knownTranslations.has(translatedMessage.text)) {
                     validationResults.push({

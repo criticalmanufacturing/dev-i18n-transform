@@ -1,0 +1,19 @@
+# Critical Manufacturing Translation File
+# Copyright (C) 2017 Critical Manufacturing S.A.
+# This file is distributed under the GPL 3.0 License
+# For more information contact@criticalmanufacturing.com
+# OriginalPackageName: test
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: cmf.dev.i18n 0.0.1 \n"
+"Report-Msgid-Bugs-To: support@criticalmanufacturing.com \n"
+"Language-Team: cmf.dev.i18n <info@criticalmanufacturing.com> \n"
+"Language: pt-PT \n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: mock.pt-PT.ts#TEXT_1
+#: mock.pt-PT.ts#TEXT_2
+msgid "Same Text"
+msgstr "Mesmo Texto"

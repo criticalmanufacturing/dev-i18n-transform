@@ -17,7 +17,7 @@ export function createFile(fileMock: MockFile): File {
 
     if (Array.isArray(fileMock.references)) {
         fileMock.references.forEach((ref) => {
-            file.addReference(ref);
+            file.addOrUpdateReference(ref);
         });
     }
 

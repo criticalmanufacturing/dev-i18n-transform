@@ -58,6 +58,17 @@ export class File {
     }
 
     /**
+     * Add or updates a reference to the current file
+     * @param reference Reference to add
+     */
+    public addOrUpdateReference(reference: string): void {
+        // If a reference already exists, skip
+        if (this.references.indexOf(reference) === -1) {
+            this.references.push(reference);
+        }
+    }
+
+    /**
      * Gets a given message from the file
      * @param id Message id
      * @returns Null if id doesn't exist, the Message otherwise
@@ -81,6 +92,11 @@ export class File {
             this.addOrUpdateMessage(file._messages[id]);
         }
 
+        if (Array.isArray(file.references)) {
+            for (let reference of file.references) {
+                this.addOrUpdateReference(reference);
+            }
+        }
     }
 
     /**
@@ -89,14 +105,6 @@ export class File {
      */
     public translatedFileName(language: string): string {
         return path.join(this._dirname, `${this._filename}.${language}.${this._extension}`);
-    }
-
-    /**
-     * Add a reference to the current file
-     * @param ref Reference to add
-     */
-    public addReference(ref: string): void {
-        this.references.push(ref);
     }
 
     /**

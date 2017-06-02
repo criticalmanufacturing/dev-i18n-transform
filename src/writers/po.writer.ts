@@ -95,7 +95,7 @@ msgstr ""
         let referenceBuffers: Buffer[] = null;
         if (file.references != null && file.references.length > 0) {
             referenceBuffers = file.references.map((ref) => {
-                return Buffer.concat([new Buffer(`# AddReference | ${ref}`), eolBuffer]);
+                return Buffer.concat([new Buffer(`# AddReference | ${ref} | ${file.translatedFileName(this._language)}`), eolBuffer]);
             });
         }
 

@@ -85,7 +85,7 @@ export class TypescriptParser implements Parser {
 
                 // Add references
                 for (let ref of (<any>tsSourceFile).imports) {
-                    file.addReference(ref.parent.getText());
+                    file.addOrUpdateReference(ref.parent.getText());
                 }
 
                 let identifierPath: {name: string, node: ts.Node}[] = [];

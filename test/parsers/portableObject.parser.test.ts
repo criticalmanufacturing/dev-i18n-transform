@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as chai from "chai";
 import { PortableObjectParser } from "../../src/parsers/portableObject.parser";
+import { File } from "../../src/model/file";
 
 describe("Portable Object Parser", () => {
 
@@ -61,5 +62,62 @@ describe("Portable Object Parser", () => {
         chai.expect(mockTwoMessage.getTranslation("pt-PT").text).to.equal("Este é um preâmbulo com ${i18n.TWO} problemas");
 
         chai.expect(mockFile.references).to.have.length(1);
+    });
+
+    it("should be able to parse duplicated translations", () => {
+        const mocksPaths = [
+            path.join(__dirname, "../mocks/duplicatedTextExample/mock.po")
+        ];
+        let parser = new PortableObjectParser("test", mocksPaths);
+        let pack = parser.run();
+
+        chai.expect(pack).to.exist;
+        chai.expect(pack.files).to.exist;
+        chai.expect(pack.files).to.have.lengthOf(1);
+
+        let referenceFile = pack.files.find((file) => {
+            return file.uniqueFileName === "mock.ts";
+        });
+
+        chai.expect(referenceFile).to.exist;
+        chai.expect(referenceFile.references).to.be.empty;
+
+        chai.expect(referenceFile.messages).to.not.be.empty;
+        chai.expect(referenceFile.messages).to.have.lengthOf(2);
+    });
+
+    it("should be able parse duplicated translations unified by POEdit program", () => {
+        const mocksPaths = [
+            path.join(__dirname, "../mocks/duplicatedTextWithCrossReferenceExample/test.po")
+        ];
+        let parser = new PortableObjectParser("test", mocksPaths);
+        let pack = parser.run();
+
+        chai.expect(pack).to.exist;
+        chai.expect(pack.files).to.exist;
+        chai.expect(pack.files).to.have.lengthOf(3);
+
+        function findFile(files: File[], name: string) {
+            return files.find((file) => {
+                return file.uniqueFileName === name;
+            });
+        }
+
+        let mockFile = findFile(pack.files, "test\\mocks\\duplicatedTextWithCrossReferenceExample\\mock.ts");
+
+        chai.expect(mockFile.references).to.exist;
+        chai.expect(mockFile.references).to.have.lengthOf(1);
+        chai.expect(mockFile.references[0]).to.equal("import i18n from \"./reference.default\";");
+
+        let referenceFile = findFile(pack.files, "test\\mocks\\duplicatedTextWithCrossReferenceExample\\reference.ts");
+
+        chai.expect(referenceFile.references).to.exist;
+        chai.expect(referenceFile.references).to.have.lengthOf(1);
+        chai.expect(referenceFile.references[0]).to.equal("import i18n from \"./reference2.default\";");
+
+        let reference2File = findFile(pack.files, "test\\mocks\\duplicatedTextWithCrossReferenceExample\\reference2.ts");
+
+        chai.expect(reference2File.references).to.exist;
+        chai.expect(reference2File.references).to.have.lengthOf(0);
     });
 });

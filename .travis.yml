@@ -11,3 +11,4 @@ deploy:
   on:
     tags: true
     repo: criticalmanufacturing/dev-i18n-transform
+  skip_cleanup: true

@@ -1,6 +1,6 @@
 {
   "name": "@criticalmanufacturing/dev-i18n-transform",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "i18n <--> gettext transform",
   "main": "src/index.js",
   "scripts": {

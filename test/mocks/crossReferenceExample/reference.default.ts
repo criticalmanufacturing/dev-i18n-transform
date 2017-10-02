@@ -1,4 +1,5 @@
 export default {
     ONE: "One",
-    TWO: "Two"
+    TWO: "Two",
+    SIX: "Six 2"
 };

@@ -43,11 +43,12 @@ describe("Typescript writer", () => {
         chai.expect(output).to.exist;
 
         let resultString = `export default {
-    "ONE": "Um",
-    "wizard": {
-        "TWO": "Dois"
+    ONE: "Um",
+    wizard: {
+        TWO: "Dois"
     }
-};`;
+};
+`;
         chai.expect(output[0].content.toString()).to.equalIgnoreSpaces(resultString);
 
     });
@@ -83,8 +84,9 @@ describe("Typescript writer", () => {
         let resultString = `import i18n from "cmf.core.controls/src/i18n/main.default.ts";
 
 export default {
-    "ONE": "Um"
-};`;
+    ONE: "Um"
+};
+`;
         chai.expect(output[0].content.toString()).to.be.equalIgnoreSpaces(resultString);
 
     });

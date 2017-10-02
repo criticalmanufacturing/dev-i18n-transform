@@ -4,6 +4,7 @@ import { Package } from "../model/package";
 import { File } from "../model/file";
 import { Util } from "../util";
 import { Translation } from "../model/translation";
+import logger from "../logger/index";
 
 import * as beautify from "js-beautify";
 
@@ -37,7 +38,11 @@ export class TypescriptWriter implements Writer {
 
         file.messages.map((msg) => {
             let translation = msg.getTranslation(this._language);
-            if (translation.text != null && typeof translation.text === "string" && translation.text.length > 0) {
+
+            if (translation == null) {
+                logger.warn(`Translation not found for ${msg.id} (language: ${this._language})`);
+            }
+            else if (translation.text != null && typeof translation.text === "string" && translation.text.length > 0) {
                 this._util.setNestedPropertyByArray(literal, msg.id.split("."), translation, true);
             }
         });
@@ -47,10 +52,17 @@ export class TypescriptWriter implements Writer {
             indent_size: 4
         });
 
+        // Give an extra line in the end of the file
+        outputText += os.EOL;
+
         return {
             file: fileName,
             content: Buffer.concat([referenceBuffer, new Buffer(outputText)])
         };
+    }
+
+    private isTemplateString(text: string): boolean {
+        return text.indexOf("${") >= 0;
     }
 
     private stringifyTS(obj: any): string {
@@ -63,7 +75,7 @@ export class TypescriptWriter implements Writer {
             if (obj.isLiteral === true) {
                 return obj.text;
             } else {
-                return `"${obj.text}"`;
+                return this.isTemplateString(obj.text) ? `\`${obj.text}\`` : `"${obj.text}"`;
             }
         }
 
@@ -88,14 +100,15 @@ export class TypescriptWriter implements Writer {
 
             // Set key output;
             objKeys.forEach((key) => {
-                let keyOut = `"${key}"`;
+                let keyOut = `${key}`;
                 let keyValOut: any = obj[key];
 
                 // Skip functions and undefined properties
                 if (keyValOut instanceof Function || typeof keyValOut === undefined) {
                     arrOfKeyVal.push("");
                 } else if (typeof keyValOut === "string") {
-                    arrOfKeyVal.push(`${keyOut}: "${keyValOut}"`);
+                    keyValOut = this.isTemplateString(keyValOut) ? `\`${keyValOut}\`` : `"${keyValOut}"`;
+                    arrOfKeyVal.push(`${keyOut}: ${keyValOut}`);
                 } else if (typeof keyValOut === "boolean" || typeof keyValOut === "number" || keyValOut === null) {
                     arrOfKeyVal.push(`${keyOut}: ${keyValOut}`);
                 // Check for nested objects, call recursively until no more objects
@@ -107,7 +120,7 @@ export class TypescriptWriter implements Writer {
         }
 
         throw new Error("Not Implemented");
-    };
+    }
 
 
     public run(): FileOutputInformation[] {

@@ -43,3 +43,6 @@ msgstr ""
 msgid "Preambule " + i18n.ON"
 msgstr ""
 
+#: test\mocks\crossReferenceExample\mock.pt-PT.ts#SIX test\mocks\crossReferenceExample\reference.pt-PT.ts#SIX
+msgid "Six"
+msgstr ""

@@ -101,55 +101,63 @@ export class PortableObjectParser implements Parser {
 
         // Extract file information from rows
         // #: test\mocks\multilevelExample\mock.pt-PT.ts#objects.WIZARD
+        // #: test\mocks\multilevelExample\mock.pt-PT.ts#objects.WIZARD test\mocks\multilevelExample\mock.pt-PT.ts#objects.WIZARD2
         const filePathRegex = /^#: (.+)$/gm;
 
         let filePathMatch;
         while ((filePathMatch = filePathRegex.exec(info)) !== null) {
-            let path = filePathMatch[1];
+            let pathLine = filePathMatch[1];
 
-            let fileAndObjectMatch = /(.*)#(.*)/.exec(path);
-            let filePath = fileAndObjectMatch[1];
-            let objectPath = fileAndObjectMatch[2];
+            // Because we may have multiple files in the same line...
+            let paths = pathLine.match(/\s?(\S*)#(\S*)/g);
 
-            // Extract file information from row
-            // Accept single or multiple lines for references
-            // # AddReference | import i18n from "./reference.default";
-            // # AddReference | import i18n from "./reference.default" | filePath;
+            for (let path of paths) {
+                let fileAndObjectMatch = /(.*)#(.*)/.exec(path.trim());
+                let filePath = fileAndObjectMatch[1];
+                let objectPath = fileAndObjectMatch[2];
+                if (objectPath === ".") console.log(path);
 
-            let references: string[] = [];
+                // Extract file information from row
+                // Accept single or multiple lines for references
+                // # AddReference | import i18n from "./reference.default";
+                // # AddReference | import i18n from "./reference.default" | filePath;
 
-            let referencesMatch = info.match(/^# (.*?) \| (.+)$/gm);
-            if (referencesMatch != null && referencesMatch.length > 0) {
+                let references: string[] = [];
 
-                for (let i = 0; i < referencesMatch.length; i++) {
-                    // Get type of comment first and its params
-                    let ref = /^# (.*?) \| (.+)$/.exec(referencesMatch[i]);
-                    // Split the params by | and trim
-                    let params = ref[2].split("|").map(p => p.trim());
+                let referencesMatch = info.match(/^# (.*?) \| (.+)$/gm);
+                if (referencesMatch != null && referencesMatch.length > 0) {
 
-                    let typeOfComment = ref[1];
+                    for (let i = 0; i < referencesMatch.length; i++) {
+                        // Get type of comment first and its params
+                        let ref = /^# (.*?) \| (.+)$/.exec(referencesMatch[i]);
+                        // Split the params by | and trim
+                        let params = ref[2].split("|").map(p => p.trim());
 
-                    switch (typeOfComment) {
-                        case "AddReference":
-                            // If there is a file, ignore references that are not for this file
-                            if (params[1] && params[1] !== filePath)
-                                continue;
+                        let typeOfComment = ref[1];
 
-                            references.push(params[0]);
-                            break;
-                        default:
-                            logger.warn(`Unknown type of entry found: '${typeOfComment}'`);
-                            break;
+                        switch (typeOfComment) {
+                            case "AddReference":
+                                // If there is a file, ignore references that are not for this file
+                                if (params[1] && params[1] !== filePath)
+                                    continue;
+
+                                references.push(params[0]);
+                                break;
+                            default:
+                                logger.warn(`Unknown type of entry found: '${typeOfComment}'`);
+                                break;
+                        }
                     }
                 }
-            }
 
-            results.push({
-                filePath: filePath,
-                objectPath: objectPath,
-                details: File.parseFileName(filePath),
-                references: references
-            });
+                results.push({
+                    filePath: filePath,
+                    objectPath: objectPath,
+                    details: File.parseFileName(filePath),
+                    references: references
+                });
+
+            }
         }
 
         return results;
@@ -160,11 +168,24 @@ export class PortableObjectParser implements Parser {
      * @param entry Translation entry to parse
      */
     private extractTranslation(entry: string): {value: string} {
-        let translationMatch = /msgstr (.*)/.exec(entry);
-        let translatedMessage = translationMatch[1];
+        // Match full translation (may include multiple lines)
+        let fullTranslationMatch = /msgstr (.*)(\n"?.*"?)*/.exec(entry);
+        let fullTranslationMessage = fullTranslationMatch[0];
 
-        // Remove "" from the text
-        translatedMessage = translatedMessage.slice(1, -1);
+        // Split translation by lines and parse each one
+        let translatedMessage = "";
+        for (let translationLine of fullTranslationMessage.split("\n")) {
+            let parsedLine = /(?:msgstr )?(.*)/.exec(translationLine)[1];
+            // Remove "" and trim the message
+            if (parsedLine.startsWith("\""))
+                parsedLine = parsedLine.slice(1);
+            if (parsedLine.endsWith("\""))
+                parsedLine = parsedLine.slice(0, -1);
+
+            // parsedLine = parsedLine.trim();
+
+            translatedMessage += parsedLine;
+        }
 
         return {
             value: translatedMessage

@@ -34,7 +34,7 @@ describe("Portable Object Parser", () => {
         chai.expect(referenceFile.references).to.be.empty;
 
         chai.expect(referenceFile.messages).to.not.be.empty;
-        chai.expect(referenceFile.messages).to.have.lengthOf(2);
+        chai.expect(referenceFile.messages).to.have.lengthOf(3);
 
         let oneMessage = referenceFile.getMessage("ONE");
 
@@ -119,5 +119,39 @@ describe("Portable Object Parser", () => {
 
         chai.expect(reference2File.references).to.exist;
         chai.expect(reference2File.references).to.have.lengthOf(0);
+    });
+
+    it("should be able to parse multiline translations", () => {
+        const mocksPaths = [
+            path.join(__dirname, "../mocks/multilineExample/mock.po")
+        ];
+        let parser = new PortableObjectParser("test", mocksPaths);
+        let pack = parser.run();
+
+        chai.expect(pack).to.exist;
+        chai.expect(pack.files).to.exist;
+        chai.expect(pack.files).to.have.lengthOf(1);
+
+        let referenceFile = pack.files.find((file) => {
+            return file.uniqueFileName === "mock.ts";
+        });
+
+        chai.expect(referenceFile).to.exist;
+        chai.expect(referenceFile.references).to.be.empty;
+
+        chai.expect(referenceFile.messages).to.not.be.empty;
+        chai.expect(referenceFile.messages).to.have.lengthOf(5);
+
+        chai.expect(referenceFile.messages[0].id).to.be.equal("single");
+        chai.expect(referenceFile.messages[1].id).to.be.equal("multiple1");
+        chai.expect(referenceFile.messages[2].id).to.be.equal("multiple2");
+        chai.expect(referenceFile.messages[3].id).to.be.equal("multiple3");
+        chai.expect(referenceFile.messages[4].id).to.be.equal("multiple4");
+
+        chai.expect(referenceFile.getMessage("single").getTranslation("pt-PT").text).to.be.equal("Single line");
+        chai.expect(referenceFile.getMessage("multiple1").getTranslation("pt-PT").text).to.be.equal("Single line");
+        chai.expect(referenceFile.getMessage("multiple2").getTranslation("pt-PT").text).to.be.equal("Multi line");
+        chai.expect(referenceFile.getMessage("multiple3").getTranslation("pt-PT").text).to.be.equal("Multi line complex");
+        chai.expect(referenceFile.getMessage("multiple4").getTranslation("pt-PT").text).to.be.equal("Multi line complex without quotes");
     });
 });

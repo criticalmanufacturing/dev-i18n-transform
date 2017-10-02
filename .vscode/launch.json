@@ -33,6 +33,16 @@
             "runtimeExecutable": null,
             "sourceMaps": true,
             "env": { "NODE_ENV": "development"}
+        },
+        {
+            "name": "test",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "cwd": "${workspaceRoot}",
+            "args": [
+                "test.js"
+            ]
         }
     ]
 }

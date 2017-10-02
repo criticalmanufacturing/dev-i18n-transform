@@ -18,10 +18,13 @@ describe("Typescript parser", () => {
 
         let file = pack.files[0];
         chai.expect(file.uniqueFileName).to.contain("mock.ts");
-        chai.expect(file.messages).to.have.length(3);
+        chai.expect(file.messages).to.have.length(6);
 
         let messageOne = file.getMessage("ONE");
         chai.expect(messageOne).to.exist;
+
+        let messageFour = file.getMessage("FOUR");
+        chai.expect(messageFour).to.exist;
 
         // Verify comments interpretation
         chai.expect(messageOne.description).to.exist;
@@ -30,6 +33,12 @@ describe("Typescript parser", () => {
         chai.expect(messageOne.hasTranslation("en-US")).to.be.true;
         chai.expect(messageOne.getTranslation("pt-PT").text).to.equal("Um");
         chai.expect(messageOne.hasTranslation("-1")).to.be.false;
+
+        // Check for binary
+        let messageSix = file.getMessage("SIX");
+        chai.expect(messageSix).to.exist;
+        chai.expect(messageSix.hasTranslation("en-US")).to.be.true;
+        chai.expect(messageSix.getTranslation("en-US").text).to.be.equal("6 + \"\"");
     });
 
     it("should parse the multilevelExample", () => {
@@ -87,7 +96,8 @@ describe("Typescript parser", () => {
             "THREE",
             "FOUR",
             "FIVE",
-            "OTHER_NODE"
+            "OTHER_NODE",
+            "SIX"
         ];
 
         let ts = new TypescriptParser("test", mocksPaths);
@@ -113,4 +123,22 @@ describe("Typescript parser", () => {
         });
     });
 
+    it("should parse multilineExample", () => {
+        const mocksPaths = [
+            path.join(__dirname, "../mocks/multilineExample/mock.default.ts")
+        ];
+
+        let ts = new TypescriptParser("test", mocksPaths);
+        let pack = ts.run();
+
+        chai.expect(pack.files).to.have.length(1);
+
+        let file = pack.files[0];
+        chai.expect(file.uniqueFileName).to.contain("mock.ts");
+        chai.expect(file.messages).to.have.length(2);
+
+        let message = file.getMessage("MULTILINE");
+        chai.expect(message).to.exist;
+        chai.expect(message.getTranslation("en-US").text.toString()).to.be.equalIgnoreSpaces("My ${\"multi\" + \"\" + \"line\"}");
+    });
 });

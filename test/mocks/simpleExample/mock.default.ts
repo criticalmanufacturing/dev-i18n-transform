@@ -4,5 +4,10 @@ export default {
      */
     ONE: "One",
     TWO: "Two",
-    THREE: "Three"
+    THREE: "Three",
+    "FOUR": "Four",
+    "FIVE": {
+        ".1": "dot 1"
+    },
+    "SIX": 6 + ""
 };

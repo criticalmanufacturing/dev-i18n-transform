@@ -49,6 +49,25 @@ msgstr ""
         let defaultMessage = message.getTranslation(Util.defaultLanguage);
         let translatedMessage = message.getTranslation(this._language);
 
+        // If the translated message is empty or null, try to locate the same message in other files
+        if (!translatedMessage || !translatedMessage.text) {
+            loop:
+            for (const externalFile of this._package.files) {
+                for (const externalMessage of externalFile.messages) {
+                    if (externalFile.uniqueFileName !== currentFile.uniqueFileName || externalMessage.id !== message.id) {
+                        const externalDefaultMessage = externalMessage.getTranslation(Util.defaultLanguage);
+                        if (externalDefaultMessage.text === defaultMessage.text) {
+                            const externalTranslatedMessage = externalMessage.getTranslation(this._language);
+                            if (externalTranslatedMessage) {
+                                translatedMessage = externalTranslatedMessage;
+                                break loop;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // Reference to original source file
         result.push(`#: ${currentFile.translatedFileName(this._language)}#${message.id}`);
 

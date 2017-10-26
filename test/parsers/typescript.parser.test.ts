@@ -141,4 +141,18 @@ describe("Typescript parser", () => {
         chai.expect(message).to.exist;
         chai.expect(message.getTranslation("en-US").text.toString()).to.be.equalIgnoreSpaces("My ${\"multi\" + \"\" + \"line\"}");
     });
+
+    it("should parse duplicatedTextWithoutTranslationExample", () => {
+        const mocksPaths = [
+            path.join(__dirname, "../mocks/duplicatedTextWithoutTranslationExample/mock1.default.ts"),
+            path.join(__dirname, "../mocks/duplicatedTextWithoutTranslationExample/mock1.pt-PT.ts"),
+            path.join(__dirname, "../mocks/duplicatedTextWithoutTranslationExample/mock2.default.ts"),
+            path.join(__dirname, "../mocks/duplicatedTextWithoutTranslationExample/mock2.pt-PT.ts")
+        ];
+
+        let ts = new TypescriptParser("test", mocksPaths);
+        let pack = ts.run();
+
+        chai.expect(pack.files).to.have.length(2);
+    });
 });

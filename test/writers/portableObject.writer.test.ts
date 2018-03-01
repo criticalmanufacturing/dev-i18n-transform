@@ -30,7 +30,7 @@ describe("Portable Object writer", () => {
 
         const expectedResult = `
         # Critical Manufacturing Translation File
-        # Copyright (C) 2017 Critical Manufacturing S.A.
+        # Copyright (C) ${new Date().getFullYear()} Critical Manufacturing S.A.
         # This file is distributed under the GPL 3.0 License
         # For more information contact@criticalmanufacturing.com
         # OriginalPackageName: test

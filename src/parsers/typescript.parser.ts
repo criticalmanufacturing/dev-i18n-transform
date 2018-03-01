@@ -115,7 +115,7 @@ export class TypescriptParser implements Parser {
                             // Check if the property as any comment associated
                             let symbol = this._typeChecker.getSymbolAtLocation(paNode.name);
                             if (symbol != null) {
-                                messageDescription = ts.displayPartsToString(symbol.getDocumentationComment());
+                                messageDescription = ts.displayPartsToString(symbol.getDocumentationComment(undefined));
                             }
 
                             // Find node bearing

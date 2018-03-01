@@ -56,7 +56,7 @@ msgstr ""
                 for (const externalMessage of externalFile.messages) {
                     if (externalFile.uniqueFileName !== currentFile.uniqueFileName || externalMessage.id !== message.id) {
                         const externalDefaultMessage = externalMessage.getTranslation(Util.defaultLanguage);
-                        if (externalDefaultMessage.text === defaultMessage.text) {
+                        if (externalDefaultMessage && externalDefaultMessage.text === defaultMessage.text) {
                             const externalTranslatedMessage = externalMessage.getTranslation(this._language);
                             if (externalTranslatedMessage) {
                                 translatedMessage = externalTranslatedMessage;

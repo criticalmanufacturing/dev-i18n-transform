@@ -52,11 +52,16 @@ msgstr ""
         // If the translated message is empty or null, try to locate the same message in other files
         if (!translatedMessage || !translatedMessage.text) {
             loop:
+            // Iterate all other files in this package
             for (const externalFile of this._package.files) {
+                // In each package, iterate all messages
                 for (const externalMessage of externalFile.messages) {
+                    // Skip itself
                     if (externalFile.uniqueFileName !== currentFile.uniqueFileName || externalMessage.id !== message.id) {
+                        // Get the translation and check if this is the same
                         const externalDefaultMessage = externalMessage.getTranslation(Util.defaultLanguage);
-                        if (externalDefaultMessage.text === defaultMessage.text) {
+                        if (externalDefaultMessage && externalDefaultMessage.text === defaultMessage.text) {
+                            // The default text is the same, so now try to get its translation also
                             const externalTranslatedMessage = externalMessage.getTranslation(this._language);
                             if (externalTranslatedMessage) {
                                 translatedMessage = externalTranslatedMessage;

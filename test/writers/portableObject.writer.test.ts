@@ -34,7 +34,7 @@ describe("Portable Object writer", () => {
         # This file is distributed under the GPL 3.0 License
         # For more information contact@criticalmanufacturing.com
         # OriginalPackageName: test
-        # 
+        #
         msgid ""
         msgstr ""
         "Project-Id-Version: @criticalmanufacturing/dev-i18n-transform _ \\n"

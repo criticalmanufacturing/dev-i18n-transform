@@ -25,7 +25,7 @@ export class PoWriter implements Writer {
 # This file is distributed under the GPL 3.0 License
 # For more information contact@criticalmanufacturing.com
 # OriginalPackageName: ${pack.name}
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ${projectInfo.name} ${projectInfo.version} \\n"

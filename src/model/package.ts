@@ -49,7 +49,8 @@ export class Package {
     public addOrUpdateFile(file: File): void {
         if (this.hasFile(file)) {
             this._files[file.uniqueFileName].merge(file);
-        }else {
+        }
+        else {
             this._files[file.uniqueFileName] = file;
         }
     }

@@ -83,7 +83,7 @@ export class File {
      * @throws Argument null error if file is not defined
      */
     public merge(file: File): void {
-
+        // Checks if the argument 'file' is null
         if (!file) {
             throw new Error("Argument 'file' cannot be null");
         }
@@ -113,13 +113,14 @@ export class File {
      * @return Decomposed file name
      */
     public static parseFileName(filename: string, packagePath?: string): {name: string, language: string, extension: string, path: string} {
-
+        // Check if the filename is undefined
         if (!filename) {
             throw new Error("Argument 'filename' cannot be undefined");
         }
 
         let match = /(.+)\.(.+?)\.(\w+)/.exec(path.basename(filename));
 
+        // See if the array 'match' is null
         if (match == null) {
             throw new Error(`Filename '${filename}' doesn't match the correct format`);
         }
@@ -127,6 +128,7 @@ export class File {
         // If package name is defined, use relative path
         let filePath: string = packagePath != null ? path.relative(packagePath, filename) : filename;
 
+        // Return the name, language, extension and path of file according with array 'match'
         return {
             name: match[1],
             language: match[2],

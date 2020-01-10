@@ -9,5 +9,6 @@ export default {
     "FIVE": {
         ".1": "dot 1"
     },
-    "SIX": 6 + ""
+    "SIX": 6 + "",
+    test: "ok",
 };

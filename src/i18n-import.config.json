@@ -1,0 +1,46 @@
+{
+    "database": {
+        "server": "$(databaseServer)",
+        "name": "$(databaseName)",
+        "user": {
+            "name": "$(databaseUserName)",
+            "password": "$(databaseUserPassword)"
+        }
+    },
+    "packages": {
+        "i18n": {
+
+        },
+        "resources": {
+
+        }
+    },
+    "sourceControl": {
+        "type": "AzureDevOps",
+        "url": "$(sourceControlUrl)",
+        "project": "$(sourceControlProject)",
+        "token": "$(sourceControlToken)",
+        "team": "$(sourceControlTeam)",
+        "user": {
+            "id": "$(sourceControlUserId)",
+            "displayName": "$(sourceControlUserDisplayName)"
+        },
+        "branch": {
+            "source": "$(sourceControlSourceBranch)",
+            "target": "$(sourceControlTargetBranch)"
+        },
+        "workItem": {
+            "title": "Translation(s)",
+            "type": "User Story",
+            "stateToIgnore": "Removed"
+        },
+        "commit": {
+            "comment": "Update i18n file"
+        },
+        "pullRequest": {
+            "title": "Translation(s)",
+            "description": "Dynamic Pull Request - Created By Translation Tool",
+            "mergeCommitMessage": "Merge PR Translation(s)"
+        }
+    }
+}

@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         
+        
         {
             "type": "node",
             "request": "launch",
             "name": "Start Application",
             "program": "${workspaceRoot}/src/index.js",
             "preLaunchTask": "build",
+            "cwd": "${workspaceRoot}",
+            "outFiles": []
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug i18n-import",
+            "program": "${workspaceRoot}/src/bin/import.js",
+            "preLaunchTask": "build",
+            "sourceMaps": true,
             "cwd": "${workspaceRoot}",
             "outFiles": []
         },

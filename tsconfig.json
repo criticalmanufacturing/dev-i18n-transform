@@ -2,9 +2,15 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
+        "lib":[
+               "es2016",
+               "dom"
+               ],
         "noImplicitAny": true,
         "sourceMap": true,
         "forceConsistentCasingInFileNames": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "noImplicitReturns": true,
         "declaration": true,
         "pretty": true,

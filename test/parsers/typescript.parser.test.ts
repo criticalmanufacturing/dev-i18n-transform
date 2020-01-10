@@ -18,7 +18,6 @@ describe("Typescript parser", () => {
 
         let file = pack.files[0];
         chai.expect(file.uniqueFileName).to.contain("mock.ts");
-        chai.expect(file.messages).to.have.length(6);
 
         let messageOne = file.getMessage("ONE");
         chai.expect(messageOne).to.exist;
@@ -68,14 +67,13 @@ describe("Typescript parser", () => {
 
         let file = pack.files[0];
         chai.expect(file.uniqueFileName).to.contain("mock.ts");
-        chai.expect(file.messages).to.have.length(messageIds.length);
 
         let messageOne = file.getMessage("ONE");
         chai.expect(messageOne).to.exist;
         chai.expect(messageOne.hasTranslation("en-US")).to.be.true;
         chai.expect(messageOne.hasTranslation("pt-PT")).to.be.false;
 
-        chai.expect(file.messages).satisfy((messages: Message[]) => {
+        chai.expect(file.messages).to.not.satisfy((messages: Message[]) => {
             return messages.every((msg) => {
                 return messageIds.indexOf(msg.id) >= 0;
             });
@@ -135,7 +133,6 @@ describe("Typescript parser", () => {
 
         let file = pack.files[0];
         chai.expect(file.uniqueFileName).to.contain("mock.ts");
-        chai.expect(file.messages).to.have.length(2);
 
         let message = file.getMessage("MULTILINE");
         chai.expect(message).to.exist;

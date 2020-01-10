@@ -1,4 +1,4 @@
-﻿export default {
+export default {
     ONE: "One",
     objects: {
         WIDGET: "Widget",
@@ -28,6 +28,11 @@
         },
         settings: {
             TITLE: "Settings"
+        }
+    },
+    test: {
+        test1: {
+            test2: "ok",
         }
     }
 };

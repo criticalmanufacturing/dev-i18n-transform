@@ -243,4 +243,4 @@ export class PortableObjectParser implements Parser {
 
         return this._package;
     }
-};
+}
